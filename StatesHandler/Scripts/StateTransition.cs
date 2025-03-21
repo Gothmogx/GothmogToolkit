@@ -1,7 +1,7 @@
 #if UNITASK
 using System;
 
-namespace GothmogToolKit.StatesHandler.Scripts
+namespace GothmogToolkit.StatesHandler
 {
 	public class StateTransition
 	{

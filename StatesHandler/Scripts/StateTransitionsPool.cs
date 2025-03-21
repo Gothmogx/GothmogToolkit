@@ -1,7 +1,7 @@
 #if UNITASK
 using UnityEngine.Pool;
 
-namespace GothmogToolKit.StatesHandler.Scripts
+namespace GothmogToolkit.StatesHandler
 {
 	public class StateTransitionsPool: ObjectPool<StateTransition>
 	{

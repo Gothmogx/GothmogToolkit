@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace GothmogToolKit.StatesHandler.Scripts
+namespace GothmogToolkit.StatesHandler
 {
 	public interface IState
 	{

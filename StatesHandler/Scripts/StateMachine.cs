@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace GothmogToolKit.StatesHandler.Scripts
+namespace GothmogToolkit.StatesHandler
 {
 	public class StatesHandlerMachine
 	{
