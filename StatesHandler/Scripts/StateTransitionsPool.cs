@@ -1,3 +1,4 @@
+#if UNITASK
 using UnityEngine.Pool;
 
 namespace GothmogToolKit.StatesHandler.Scripts
@@ -14,3 +15,4 @@ namespace GothmogToolKit.StatesHandler.Scripts
 
 	}
 }
+#endif

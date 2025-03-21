@@ -1,3 +1,4 @@
+#if UNITASK
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -58,3 +59,4 @@ namespace GothmogToolKit.StatesHandler.Scripts
 		public bool TryGetState(Type type, out IState state) => _states.TryGetValue(type, out state);
 	}
 }
+#endif

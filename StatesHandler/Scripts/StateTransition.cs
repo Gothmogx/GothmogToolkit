@@ -1,3 +1,4 @@
+#if UNITASK
 using System;
 
 namespace GothmogToolKit.StatesHandler.Scripts
@@ -32,3 +33,4 @@ namespace GothmogToolKit.StatesHandler.Scripts
 		}
 	}
 }
+#endif

@@ -1,3 +1,4 @@
+#if UNITASK
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -35,3 +36,4 @@ namespace GothmogToolKit.StatesHandler.Scripts
 		UniTask<StateTransition> Execute(CancellationToken cancellationToken, object stateTransitionArgs = null);
 	}
 }
+#endif
