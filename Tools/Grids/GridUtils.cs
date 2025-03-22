@@ -1,7 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+
+#if LINQFASTER
+using JM.LinqFaster;
+#endif
+
 
 namespace GothmogToolkit.Tools.Grids
 {
@@ -30,7 +33,7 @@ namespace GothmogToolkit.Tools.Grids
 		{
 #if LINQFASTER
 			return DirectionNames.WhereF(x =>  !x.Equals(UndefinedDirection))
-				.SelectF(direction => GetIndexInDirection(source, direction));
+				.SelectF(direction => GetPositionInDirection(source, direction));
 #else
 			return DirectionNames.Where(x => !x.Equals(UndefinedDirection))
 				.Select(direction => GetPositionInDirection(source, direction)).ToList();
@@ -40,8 +43,8 @@ namespace GothmogToolkit.Tools.Grids
 		public IReadOnlyList<(TDirection, TVector)> GetAdjacentPositionsWithDirections(TVector source)
 		{
 #if LINQFASTER
-			return HexGridUtils.DirectionNames.WhereF(x => x != UndefinedDirection)
-				.SelectF(direction => (direction, GetIndexInDirection(source, direction)));
+			return DirectionNames.WhereF(x =>  !x.Equals(UndefinedDirection))
+				.SelectF(direction => (direction, GetPositionInDirection(source, direction)));
 #else
 			return DirectionNames.Where(x => !x.Equals(UndefinedDirection))
 				.Select(direction => (direction, GetPositionInDirection(source, direction))).ToList();

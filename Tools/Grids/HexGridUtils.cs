@@ -1,8 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-#if LINQFASTER
-using JM.LinqFaster
-#endif
 
 namespace GothmogToolkit.Tools.Grids
 {
