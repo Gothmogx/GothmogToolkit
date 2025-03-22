@@ -19,8 +19,7 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 			IsActive = true;
 			StateEntered?.Invoke();
 			OnEntered();
-
-			cancellationToken.ThrowIfCancellationRequested();
+			
 			var task = await Process(cancellationToken, stateTransitionArgs);
 
 			IsActive = false;

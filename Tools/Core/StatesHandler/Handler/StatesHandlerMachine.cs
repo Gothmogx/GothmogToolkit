@@ -13,9 +13,9 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 		public event Action<IState> EnteringState;
 		public event Action<IState> ExitedState;
 
-		public void Initialize(IEnumerable<IState> sessionStates)
+		public void Initialize(IEnumerable<IState> states)
 		{
-			foreach (var state in sessionStates)
+			foreach (var state in states)
 			{
 				RegisterState(state);
 			}
@@ -43,15 +43,23 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 				if (!TryGetState(nextState, out var state))
 					throw new ArgumentException($"No state of type {nextState} found");
 
-				cancellationToken.ThrowIfCancellationRequested();
-
-				EnteringState?.Invoke(state);
-				lastTransition = await state.Execute(cancellationToken, lastTransition?.TransitionArgs);
-				ExitedState?.Invoke(state);
+				try
+				{
+					cancellationToken.ThrowIfCancellationRequested();
+					
+					EnteringState?.Invoke(state);
+					lastTransition = await state.Execute(cancellationToken, lastTransition?.TransitionArgs);
+					ExitedState?.Invoke(state);
+				}
+				catch (OperationCanceledException)
+				{
+					return;
+				}
 
 				nextState = lastTransition.NextStateType;
 				if (lastTransition?.NextStateType == null)
 					return;
+
 				await UniTask.Yield();
 			}
 		}
