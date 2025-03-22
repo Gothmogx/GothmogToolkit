@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace GothmogToolkit.Tools.Grids
 {
-	public class CrossGridUtils : GridUtils<CrossGridUtils.Direction>
+	public class CrossGridUtils : GridUtils<Vector2Int, CrossGridUtils.Direction>
 	{
-		public static GridUtils<Direction> Instance
+		public static GridUtils<Vector2Int, Direction> Instance
 		{
 			get
 			{
@@ -16,7 +16,7 @@ namespace GothmogToolkit.Tools.Grids
 
 		public override Direction UndefinedDirection => Direction.Undefined;
 
-		public override List<Vector2Int> Directions { get; } = new()
+		protected override List<Vector2Int> Directions { get; } = new()
 		{
 			new Vector2Int(0, 0),
 			new Vector2Int(-1, 0),
@@ -34,7 +34,7 @@ namespace GothmogToolkit.Tools.Grids
 			{ new Vector2Int(0, -1), Direction.Down },
 		};
 
-		public override List<Direction> DirectionNames { get; } = new()
+		protected override List<Direction> DirectionNames { get; } = new()
 		{
 			Direction.Undefined,
 			Direction.Left,
@@ -44,8 +44,20 @@ namespace GothmogToolkit.Tools.Grids
 		};
 
 		protected override int GetDirectionIndex(Direction direction) => (int)direction;
+		
+		public override Vector2Int GetPositionInDirection(Vector2Int currIndex, Direction direction, int steps = 1)
+		{
+			var result = currIndex;
+			for (var i = 0; i < steps; i++)
+			{
+				var directionVector = GetAdjacentPositionDirection(currIndex, direction);
+				result += directionVector;
+			}
 
-		public override Vector2Int GetAdjacentDirection(Vector2Int source, Direction direction)
+			return result;
+		}
+
+		public override Vector2Int GetAdjacentPositionDirection(Vector2Int source, Direction direction)
 		{
 			return direction switch
 			{
