@@ -10,8 +10,8 @@ namespace Game.Domains.Common.Scripts.Contoller
 		TEntity Get(long id);
 		bool TryGet(long id, out TEntity entity);
 	}
-	
-	public class EntityController<TEntity> where TEntity : IHasId
+
+	public class EntityController<TEntity> : IEntityController<TEntity> where TEntity : IHasId
 	{
 		private readonly Dictionary<long, TEntity> _entitiesDictionary = new();
 		public List<TEntity> Entities { get; } = new();
