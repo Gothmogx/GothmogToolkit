@@ -4,6 +4,6 @@ namespace GothmogToolkit.Tools.Core.Id
 	{
 		T Id { get; }
 		void SetId(T id);
-		bool IsSet() => !Id.Equals(default);
+		bool IsSet() => !Id.Equals(default(T));
 	}
 }
