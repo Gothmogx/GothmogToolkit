@@ -25,7 +25,7 @@ namespace GothmogToolkit.Tools.Grids
 
 		public override Direction UndefinedDirection => Direction.Undefined;
 
-		private HexGridUtils((Direction directionName, Vector2Int directionValue)[] directions) : base(directions)
+		private HexGridUtils((Direction name, Vector2Int value)[] directions) : base(directions)
 		{
 		}
 

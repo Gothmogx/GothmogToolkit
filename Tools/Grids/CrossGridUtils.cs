@@ -22,7 +22,7 @@ namespace GothmogToolkit.Tools.Grids
 		}
 		public override Direction UndefinedDirection => Direction.Undefined;
 		
-		private CrossGridUtils((Direction directionName, Vector2Int directionValue)[] directions) : base(directions)
+		private CrossGridUtils((Direction name, Vector2Int value)[] directions) : base(directions)
 		{
 		}
 		
@@ -41,7 +41,7 @@ namespace GothmogToolkit.Tools.Grids
 		}
 
 		public override Vector2Int GetAdjacentPositionDirection(Vector2Int source, Direction direction)
-			=> Directions[(int)direction].directionValue;
+			=> Directions[(int)direction].value;
 
 		public enum Direction
 		{
