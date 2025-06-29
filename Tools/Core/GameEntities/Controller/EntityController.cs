@@ -9,6 +9,7 @@ namespace Game.Domains.Common.Scripts.Contoller
 		List<TEntity> Entities { get; }
 		TEntity Get(long id);
 		bool TryGet(long id, out TEntity entity);
+		public event Action<TEntity> EntityRegistered;
 	}
 
 	public class EntityController<TEntity> : IEntityController<TEntity> where TEntity : IHasId

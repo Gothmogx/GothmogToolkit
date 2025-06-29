@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.Domains.Common.Scripts.Core.Id;
 using UnityEngine;
 
@@ -10,7 +11,12 @@ namespace Game.Domains.Common.Scripts.Contoller
 		public List<TEntity> Entities => _internalController.Entities;
 		public TEntity Get(long id) => _internalController.Get(id);
 		public bool TryGet(long id, out TEntity entity) => _internalController.TryGet(id, out entity);
-		public virtual void Register(TEntity entity) => _internalController.Register(entity);
+		public event Action<TEntity> EntityRegistered;
+		public virtual void Register(TEntity entity)
+		{
+			_internalController.Register(entity);
+			EntityRegistered?.Invoke(entity);
+		}
 
 	}
 }
