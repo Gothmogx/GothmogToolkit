@@ -74,6 +74,8 @@ namespace GothmogToolkit.Tools.Helpers.ECS
     
         public static void RemoveComponent<T>(this Entity entity) where T : unmanaged, IComponentData
             => Manager.RemoveComponent<T>(entity);
+        public static void RemoveComponent<T>(this Entity entity, EntityCommandBuffer commandBuffer) where T : unmanaged, IComponentData
+            => commandBuffer.RemoveComponent<T>(entity);
     
         public static bool TryRemoveComponent<T>(this Entity entity) where T : unmanaged, IComponentData
         {
