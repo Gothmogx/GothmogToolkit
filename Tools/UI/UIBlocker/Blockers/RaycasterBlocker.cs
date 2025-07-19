@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace GothmogToolkit.Tools.UI.UIBlocker
@@ -28,5 +29,10 @@ namespace GothmogToolkit.Tools.UI.UIBlocker
 		}
 		private void OnBlockedChanged(bool isBlocked) => SetBlocked(isBlocked);
 		private void SetBlocked(bool blocked) => _raycaster.enabled = !blocked;
+
+		private void OnDestroy()
+		{
+			_blockUIEventsHandler.BlockedChanged -= OnBlockedChanged;
+		}
 	}
 }

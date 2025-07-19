@@ -1,4 +1,4 @@
-namespace GothmogToolkit.Tools.Core.Id
+namespace GothmogToolkit.Tools.Core.Id.Controller
 {
 	public class IterativeUintIdController : IdController<uint>
 	{ 

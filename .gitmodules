@@ -1,0 +1,3 @@
+[submodule "ThirdParty/LinqFaster"]
+	path = ThirdParty/LinqFaster
+	url = git@github.com:Gothmogx/LinqFaster.git
