@@ -1,10 +1,12 @@
 ﻿#if ECS
+using GothmogToolkit.Tools.ECS.SystemGroups;
 using GothmogToolkit.Tools.Helpers.ECS;
 using Unity.Collections;
 using Unity.Entities;
 
 namespace GothmogToolkit.Tools.ECS
 {
+	[UpdateInGroup(typeof(BeforeSimulationSystemGroup))]
 	public partial class IdSystem : SystemBase
 	{
 		private const int InitialCapacity = 1024;
