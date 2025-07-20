@@ -13,7 +13,7 @@ namespace GothmogToolkit.Tools.Core.ValueWrappers
 			set => _wrapper.Value = value;
 		}
 
-		public event Action<ValueChangedEventArgs<TType>> ValueChanged
+		public event Action<ValueChangedArgs<TType>> ValueChanged
 		{
 			add => _wrapper.ValueChanged += value;
 			remove => _wrapper.ValueChanged -= value;

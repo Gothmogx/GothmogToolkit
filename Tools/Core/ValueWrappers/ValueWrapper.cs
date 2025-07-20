@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace GothmogToolkit.Tools.Core.ValueWrappers
 {
@@ -12,7 +13,7 @@ namespace GothmogToolkit.Tools.Core.ValueWrappers
 			set => SetValue(value);
 		}
 
-		public event Action<ValueChangedEventArgs<TType>> ValueChanged;
+		public event Action<ValueChangedArgs<TType>> ValueChanged;
 
 		/// <summary>
 		/// Returns true if value has changed
@@ -27,10 +28,23 @@ namespace GothmogToolkit.Tools.Core.ValueWrappers
 			var oldValue = _value;
 			_value = value;
 
-			ValueChanged?.Invoke(new ValueChangedEventArgs<TType>(oldValue, _value));
+			ValueChanged?.Invoke(new ValueChangedArgs<TType>(oldValue, _value));
 			return true;
 		}
 
+		public bool Set(TType newValue)
+		{
+			var previousValue = _value;
+			if (_value.Equals(newValue)) return false;
+			ValueChanged?.Invoke(new ValueChangedArgs<TType>(_value, newValue));
+			_value = newValue;
+			return true;
+		}
+		public bool Set([NotNull]Func<TType,TType> predicate)
+		{
+			return Set(predicate(Value));
+		}
+		
 		protected virtual TType GetValue() => _value;
 	}
 }

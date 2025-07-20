@@ -9,6 +9,6 @@ namespace GothmogToolkit.Tools.Core.ValueWrappers
 	public interface IValueWrapper<TType>
 	{
 		TType Value { get; set; }
-		event Action<ValueChangedEventArgs<TType>> ValueChanged;
+		event Action<ValueChangedArgs<TType>> ValueChanged;
 	}
 }
