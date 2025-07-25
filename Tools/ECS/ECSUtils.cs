@@ -26,7 +26,7 @@ namespace GothmogToolkit.Tools.Helpers.ECS
             => Manager.GetAspect<T>(entity);
         public static bool HasComponent<T>(this Entity entity) where T : unmanaged, IComponentData 
             => Manager.HasComponent<T>(entity); 
-    
+        
         public static T GetComponent<T>(this Entity entity) where T : unmanaged, IComponentData => Manager.GetComponentData<T>(entity);
 
         public static bool TryGetComponent<T>(this Entity entity, out T component) where T : unmanaged, IComponentData
@@ -47,7 +47,24 @@ namespace GothmogToolkit.Tools.Helpers.ECS
             => Manager.AddComponent<T>(entity);
         public static void AddComponent<T>(this Entity entity, EntityCommandBuffer commandBuffer) where T : unmanaged, IComponentData 
             => commandBuffer.AddComponent<T>(entity);
-    
+
+        public static bool TryAddComponent<T>(this Entity entity, EntityCommandBuffer commandBuffer)
+            where T : unmanaged, IComponentData
+        {
+            if (entity.HasComponent<T>())
+                return true;
+            commandBuffer.AddComponent<T>(entity);
+            return true;
+        } 
+        public static bool TryAddComponent<T>(this Entity entity)
+            where T : unmanaged, IComponentData
+        {
+            if (entity.HasComponent<T>())
+                return true;
+            Manager.AddComponent<T>(entity);
+            return true;
+        } 
+        
         public static void AddComponent<T>(this Entity entity, T data) where T : unmanaged, IComponentData
         {
             Manager.AddComponent<T>(entity);
@@ -79,8 +96,19 @@ namespace GothmogToolkit.Tools.Helpers.ECS
     
         public static bool TryRemoveComponent<T>(this Entity entity) where T : unmanaged, IComponentData
         {
-            if (!entity.HasComponent<T>()) return false;
-            entity.RemoveComponent<T>(); return true;
+            if (!entity.HasComponent<T>()) 
+                return false;
+            
+            entity.RemoveComponent<T>(); 
+            return true;
+        }
+        public static bool TryRemoveComponent<T>(this Entity entity, EntityCommandBuffer commandBuffer) where T : unmanaged, IComponentData
+        {
+            if (!entity.HasComponent<T>()) 
+                return false;
+            
+            commandBuffer.RemoveComponent<T>(entity); 
+            return true;;
         }
     
     
