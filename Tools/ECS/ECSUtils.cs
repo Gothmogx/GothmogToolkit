@@ -26,7 +26,8 @@ namespace GothmogToolkit.Tools.Helpers.ECS
             => Manager.GetAspect<T>(entity);
         public static bool HasComponent<T>(this Entity entity) where T : unmanaged, IComponentData 
             => Manager.HasComponent<T>(entity); 
-        
+        public static bool HasComponent<T>(this Entity entity, EntityManager manager) where T : unmanaged, IComponentData 
+            => manager.HasComponent<T>(entity); 
         public static T GetComponent<T>(this Entity entity) where T : unmanaged, IComponentData => Manager.GetComponentData<T>(entity);
 
         public static bool TryGetComponent<T>(this Entity entity, out T component) where T : unmanaged, IComponentData

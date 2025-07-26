@@ -6,7 +6,7 @@ using Unity.Entities;
 
 namespace GothmogToolkit.Tools.ECS
 {
-	[UpdateInGroup(typeof(BeforeSimulationSystemGroup))]
+	[UpdateInGroup(typeof(InGameInitializationSystemGroup))]
 	public partial class IdSystem : SystemBase
 	{
 		private const int InitialCapacity = 1024;
