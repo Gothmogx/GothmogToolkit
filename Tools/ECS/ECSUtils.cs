@@ -30,9 +30,9 @@ namespace GothmogToolkit.Tools.Helpers.ECS
             => manager.HasComponent<T>(entity); 
         public static T GetComponent<T>(this Entity entity) where T : unmanaged, IComponentData => Manager.GetComponentData<T>(entity);
 
-        public static bool TryGetComponent<T>(this Entity entity, out T component) where T : unmanaged, IComponentData
+        public static bool TryGetComponent<T>(this Entity entity, EntityManager manager, out T component) where T : unmanaged, IComponentData
         {
-            if (Manager.HasComponent<T>(entity))
+            if (manager.HasComponent<T>(entity))
             {
                 component = Manager.GetComponentData<T>(entity);
                 return true;
@@ -40,6 +40,11 @@ namespace GothmogToolkit.Tools.Helpers.ECS
 
             component = default;
             return false;
+        }
+        
+        public static bool TryGetComponent<T>(this Entity entity, out T component) where T : unmanaged, IComponentData
+        {
+            return entity.TryGetComponent<T>(Manager, out component);
         }
         public static bool TryGet<T>(this Entity entity, out T data) where T : unmanaged, IComponentData
             => entity.TryGetComponent(out data);
@@ -57,19 +62,28 @@ namespace GothmogToolkit.Tools.Helpers.ECS
             commandBuffer.AddComponent<T>(entity);
             return true;
         } 
-        public static bool TryAddComponent<T>(this Entity entity)
+        public static bool TryAddComponent<T>(this Entity entity, EntityManager manager)
             where T : unmanaged, IComponentData
         {
             if (entity.HasComponent<T>())
                 return true;
-            Manager.AddComponent<T>(entity);
+            manager.AddComponent<T>(entity);
             return true;
+        } 
+        public static bool TryAddComponent<T>(this Entity entity)
+            where T : unmanaged, IComponentData
+        {
+            return TryAddComponent<T>(entity, Manager);
         } 
         
         public static void AddComponent<T>(this Entity entity, T data) where T : unmanaged, IComponentData
         {
-            Manager.AddComponent<T>(entity);
-            Manager.SetComponentData(entity, data);
+            entity.AddComponent(data,Manager);
+        }
+        public static void AddComponent<T>(this Entity entity, T data, EntityManager manager) where T : unmanaged, IComponentData
+        {
+            manager.AddComponent<T>(entity);
+            manager.SetComponentData(entity, data);
         }
         public static void AddComponent<T>(this Entity entity, T data, EntityCommandBuffer commandBuffer) where T : unmanaged, IComponentData
         {
@@ -83,6 +97,30 @@ namespace GothmogToolkit.Tools.Helpers.ECS
             change(ref data);
             Manager.SetComponentData(entity, data);
         }
+        
+        public static void ModifyComponent<T>(this Entity entity, RefAction<T> change, EntityManager manager) where T : unmanaged, IComponentData
+        {
+            var data = manager.GetComponentData<T>(entity);
+            change(ref data);
+            Manager.SetComponentData(entity, data);
+        }
+        
+        public static void AddOrModifyComponent<T>(this Entity entity, RefAction<T> change, EntityManager manager) where T : unmanaged, IComponentData
+        {
+            if(!entity.HasComponent<T>(manager))
+                entity.AddComponent(new T(), manager);
+
+            entity.ModifyComponent(change, manager);
+        }
+        
+        public static void AddOrModifyComponent<T>(this Entity entity, RefAction<T> change, EntityManager manager, EntityCommandBuffer buffer) where T : unmanaged, IComponentData
+        {
+            if(!entity.HasComponent<T>(manager))
+                entity.AddComponent(new T(), buffer);
+
+            entity.ModifyComponent(change, buffer);
+        }
+
         public static void ModifyComponent<T>(this Entity entity, RefAction<T> change, EntityCommandBuffer commandBuffer) where T : unmanaged, IComponentData
         {
             var data = Manager.GetComponentData<T>(entity);
@@ -119,7 +157,8 @@ namespace GothmogToolkit.Tools.Helpers.ECS
             => commandBuffer.AddBuffer<T>(entity);
         public static DynamicBuffer<T> GetBuffer<T>(this Entity entity) where T : unmanaged, IBufferElementData
             => Manager.GetBuffer<T>(entity);
-
+        public static DynamicBuffer<T> GetBuffer<T>(this Entity entity, EntityManager manager) where T : unmanaged, IBufferElementData
+            => manager.GetBuffer<T>(entity);
         public static bool TryGetBuffer<T>(this Entity entity, out DynamicBuffer<T> buffer)
             where T : unmanaged, IBufferElementData
         {
