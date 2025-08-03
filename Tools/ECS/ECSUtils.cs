@@ -19,6 +19,12 @@ namespace GothmogToolkit.Tools.Helpers.ECS
             return e;
         }
     
+        public static Entity CreateEntity<T>(T data, EntityCommandBuffer ecb) where T : unmanaged, IComponentData
+        {
+            var e =ecb.CreateEntity();
+            e.AddComponent(data, ecb);
+            return e;
+        }
         public static void DestroyEntity(this Entity e) => Manager.DestroyEntity(e);
         public static void DestroyEntity(this Entity e, EntityCommandBuffer commandBuffer) => commandBuffer.DestroyEntity(e);
 
