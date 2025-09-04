@@ -25,8 +25,10 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 		{
 			if (state == null)
 				throw new ArgumentNullException($"Failed to register state. The state is null.");
+			
 			if (state.Type == null)
 				throw new ArgumentNullException($"Failed to register state. Type of the state {state} is null.");
+			
 			if (!_states.TryAdd(state.Type, state))
 				throw new ArgumentException(
 					$"Failed to register state. State of type {state.Type} is already registered");
