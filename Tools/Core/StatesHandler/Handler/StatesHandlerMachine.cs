@@ -32,7 +32,7 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 					$"Failed to register state. State of type {state.Type} is already registered");
 		}
 
-		public async UniTask Run<TFirstState>(CancellationToken cancellationToken, bool shouldYield)
+		public async UniTask Run<TFirstState>(CancellationToken cancellationToken, bool shouldYieldBetweenStates = false)
 			where TFirstState : State
 		{
 			var nextState = typeof(TFirstState);
@@ -59,8 +59,9 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 				nextState = lastTransition.NextStateType;
 				if (lastTransition?.NextStateType == null)
 					return;
-
-				await UniTask.Yield();
+				
+				if(shouldYieldBetweenStates)
+					await UniTask.Yield();
 			}
 		}
 
