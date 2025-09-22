@@ -1,6 +1,7 @@
 #if UNITASK && ADDRESSABLES
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using GothmogToolkit.Tools.Core.OperationResults;
 using UnityEngine.AddressableAssets;
@@ -14,7 +15,7 @@ namespace GothmogToolkit.Tools.ScenesManager
 		private string _activeScene;
 		private readonly Dictionary<string, AsyncOperationHandle> _loadedScenes = new();
 		public async UniTask<OperationData> LoadScene(string sceneKey, LoadSceneMode mode = LoadSceneMode.Single,
-			bool activateOnLoad = true, UniTask onBeforeLoad = default, UniTask onAfterLoad = default)
+			bool activateOnLoad = true, UniTask onBeforeLoad = default, UniTask onAfterLoad = default, CancellationToken cancellationToken = default)
 		{
 			try
 			{
@@ -22,16 +23,11 @@ namespace GothmogToolkit.Tools.ScenesManager
 					throw new InvalidOperationException($"Scene {sceneKey} is already loaded");
 
 				await onBeforeLoad;
-				var handle = Addressables.LoadSceneAsync(sceneKey, mode, activateOnLoad);
+				var handle = Addressables.LoadSceneAsync(sceneKey, mode, activateOnLoad); //cancellation is not supported:(
 				await handle.Task;
 				_loadedScenes[sceneKey] = handle;
 				_activeScene = sceneKey;
 				await onAfterLoad;
-			}
-			catch (OperationCanceledException)
-			{
-				_activeScene = null;
-				return new OperationData(OperationResult.Cancelled);
 			}
 			catch (Exception exception)
 			{
