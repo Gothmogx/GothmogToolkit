@@ -22,7 +22,7 @@ namespace GothmogToolkit.Tools.Helpers.Logger
 			{ IGothmogLogger.Color.Black, "000000ff" },
 		};
 
-		public virtual void Log(string message, object sender = default,
+		public virtual void Log(string message, object sender = null,
 			IGothmogLogger.Color color = default)
 		{
 			if (!IsLogging) return;
@@ -46,6 +46,22 @@ namespace GothmogToolkit.Tools.Helpers.Logger
 				_stringBuilder.Append("</color>");
 
 			Debug.Log(_stringBuilder.ToString());
+		}
+		public void LogError(string message, object sender = null)
+		{
+			if (!IsLogging) 
+				return;
+			
+			_stringBuilder.Append(message);
+			_stringBuilder.Append(".");
+
+			if (sender != null)
+			{
+				_stringBuilder.Append(" Sender: ");
+				_stringBuilder.Append(sender);
+				_stringBuilder.Append(".");
+			}
+			Debug.LogError(_stringBuilder.ToString());
 		}
 
 		private string GetColorString(IGothmogLogger.Color color) 

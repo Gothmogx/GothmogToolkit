@@ -4,6 +4,7 @@ namespace GothmogToolkit.Tools.Helpers.Logger
 	{
 		bool IsLogging { get; set; }
 		void Log(string message, object sender = default, Color color = default);
+		void LogError(string message, object sender = default);
 		public enum Color
 		{
 			Default,
