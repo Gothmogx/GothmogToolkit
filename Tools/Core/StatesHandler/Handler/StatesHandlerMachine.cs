@@ -5,7 +5,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 
 namespace GothmogToolkit.Tools.Core.StatesHandler
-{ 
+{
 	[Obsolete("Use generic version")]
 	public class StatesHandlerMachine
 	{
@@ -26,16 +26,16 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 		{
 			if (state == null)
 				throw new ArgumentNullException($"Failed to register state. The state is null.");
-			
+
 			if (state.Type == null)
 				throw new ArgumentNullException($"Failed to register state. Type of the state {state} is null.");
-			
+
 			if (!_states.TryAdd(state.Type, state))
 				throw new ArgumentException(
 					$"Failed to register state. State of type {state.Type} is already registered");
 		}
 
-		public async UniTask Run<TFirstState>(CancellationToken cancellationToken, bool shouldYieldBetweenStates = false)
+		public async UniTask Run<TFirstState>(CancellationToken cancellationToken)
 			where TFirstState : IState
 		{
 			var nextState = typeof(TFirstState);
@@ -49,7 +49,7 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 				try
 				{
 					cancellationToken.ThrowIfCancellationRequested();
-					
+
 					EnteringState?.Invoke(state);
 					lastTransition = await state.Execute(cancellationToken, lastTransition?.TransitionArgs);
 					ExitedState?.Invoke(state);
@@ -60,17 +60,17 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 				}
 
 				nextState = lastTransition.NextStateType;
+
 				if (lastTransition?.NextStateType == null)
 					return;
-				
-				if(shouldYieldBetweenStates)
+				if (lastTransition is { IsYieldRequired: true })
 					await UniTask.Yield();
 			}
 		}
 
 		public bool TryGetState(Type type, out IState state) => _states.TryGetValue(type, out state);
 	}
-	
+
 	public class StatesHandlerMachine<TState> where TState : IState
 	{
 		private readonly Dictionary<Type, TState> _states = new(8);
@@ -90,10 +90,10 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 		{
 			if (state == null)
 				throw new ArgumentNullException($"Failed to register state. The state is null.");
-			
+
 			if (state.Type == null)
 				throw new ArgumentNullException($"Failed to register state. Type of the state {state} is null.");
-			
+
 			if (!_states.TryAdd(state.Type, state))
 				throw new ArgumentException(
 					$"Failed to register state. State of type {state.Type} is already registered");
@@ -113,7 +113,7 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 				try
 				{
 					cancellationToken.ThrowIfCancellationRequested();
-					
+
 					EnteringState?.Invoke(state);
 					lastTransition = await state.Execute(cancellationToken, lastTransition?.TransitionArgs);
 					ExitedState?.Invoke(state);
@@ -126,14 +126,14 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 				nextState = lastTransition.NextStateType;
 				if (lastTransition?.NextStateType == null)
 					return;
-				
-				if(shouldYieldBetweenStates)
+
+				if (shouldYieldBetweenStates)
 					await UniTask.Yield();
 			}
 		}
 
 		public bool TryGetState(Type type, out TState state) => _states.TryGetValue(type, out state);
 	}
-	
+
 }
 #endif

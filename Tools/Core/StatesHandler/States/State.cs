@@ -40,6 +40,11 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 		}
 
 		public override string ToString() => GetType().Name;
+		
+		protected StateTransition TransitTo(Type nextStateType, object stateEnterArgs = null, bool isYieldRequired = false)
+		{
+			return StateTransition.GetTransition(this, nextStateType, stateEnterArgs, isYieldRequired);
+		}
 	}
 }
 #endif
