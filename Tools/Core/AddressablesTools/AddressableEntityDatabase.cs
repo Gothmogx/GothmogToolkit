@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using GothmogToolkit.Tools.Core.Id;
 using GothmogToolkit.Tools.Core.OperationResults;
+using GothmogToolkit.Tools.Core.Types;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -12,7 +13,7 @@ using Object = UnityEngine.Object;
 namespace GothmogToolkit.Tools.Core.AddressablesTools
 {
 	public abstract class AddressablePrefabDatabase<TType, TId> : AddressableEntityDatabase<TType, GameObject, TId>
-		where TType : Object, IIdContainer<TId>
+		where TType : Object, ITypeContainer<TId>
 	{
 		protected override async UniTask LoadResources()
 		{
@@ -27,7 +28,7 @@ namespace GothmogToolkit.Tools.Core.AddressablesTools
 	}
 
 	public abstract class AddressableObjectDatabase<TType, TId> : AddressableEntityDatabase<TType, TType, TId>
-		where TType : Object, IIdContainer<TId>
+		where TType : Object,  ITypeContainer<TId>
 	{
 		protected override async UniTask LoadResources()
 		{
@@ -42,7 +43,7 @@ namespace GothmogToolkit.Tools.Core.AddressablesTools
 	}
 
 	public abstract class AddressableEntityDatabase<TType, THandle, TId> : IDisposable
-		where TType : Object, IIdContainer<TId>
+		where TType : Object,  ITypeContainer<TId>
 	{
 		private readonly Dictionary<TId, TType> _types = new();
 		protected AsyncOperationHandle<IList<THandle>> _handles;
@@ -75,7 +76,7 @@ namespace GothmogToolkit.Tools.Core.AddressablesTools
 
 		protected abstract void OnLoaded(THandle resource);
 
-		protected bool TryAdd(TType type) => _types.TryAdd(type.Id, type);
+		protected bool TryAdd(TType type) => _types.TryAdd(type.Type, type);
 		public void Clear()
 		{
 			_types?.Clear();

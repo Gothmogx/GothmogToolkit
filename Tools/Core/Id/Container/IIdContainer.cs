@@ -1,5 +1,6 @@
 namespace GothmogToolkit.Tools.Core.Id
 {
+
 	public interface IIdContainer<T> 
 	{
 		T Id { get; }
