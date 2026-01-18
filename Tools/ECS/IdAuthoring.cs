@@ -32,6 +32,5 @@ namespace GothmogToolkit.Tools.ECS
 		}
 
 	}
-
-#endif
 }
+#endif
