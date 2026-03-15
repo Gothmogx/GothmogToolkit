@@ -34,7 +34,7 @@ namespace GothmogToolkit.Tools.Core.LoadingScreens.Scripts
 			{
 				progress = Mathf.MoveTowards(progress, 1f, speed * Time.deltaTime);
 				_canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, progress);
-				await UniTask.Yield(token);
+				await UniTask.WaitForEndOfFrame(token);
 			}
 		}
 
