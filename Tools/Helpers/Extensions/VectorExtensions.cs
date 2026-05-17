@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿#if MATHEMATICS
+using Unity.Mathematics;
+#endif
+using UnityEngine;
 
 namespace GothmogToolkit.Tools.Helpers.Extensions
 {
@@ -9,5 +12,10 @@ namespace GothmogToolkit.Tools.Helpers.Extensions
 		public static Vector2Int ToVector2Int(this Vector2 vector) => new(Mathf.RoundToInt(vector.x), Mathf.RoundToInt(vector.y));
 		public static Vector2Int ToVector2Int(this Vector3 vector) => new(Mathf.RoundToInt(vector.x), Mathf.RoundToInt(vector.y));
 		public static Vector3 WithZ(this Vector3 vector, float z) => new(vector.x, vector.y, z);
+		
+		#if MATHEMATICS
+		public static Vector2Int ToVector2Int(this int2 vector)=>new(vector.x,vector.y);
+		public static int2 ToInt2(this Vector2Int vector)=>new(vector.x,vector.y);
+		#endif
 	}
 }
