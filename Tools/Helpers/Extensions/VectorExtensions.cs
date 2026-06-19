@@ -11,6 +11,8 @@ namespace GothmogToolkit.Tools.Helpers.Extensions
 		public static Vector3Int ToVector3Int(this Vector2Int vector2Int) => new(vector2Int.x, vector2Int.y);
 		public static Vector2Int ToVector2Int(this Vector2 vector) => new(Mathf.RoundToInt(vector.x), Mathf.RoundToInt(vector.y));
 		public static Vector2Int ToVector2Int(this Vector3 vector) => new(Mathf.RoundToInt(vector.x), Mathf.RoundToInt(vector.y));
+		public static Vector3 WithX(this Vector3 vector, float x) => new(x, vector.y, vector.z);
+		public static Vector3 WithY(this Vector3 vector, float y) => new(vector.x, y, vector.z);
 		public static Vector3 WithZ(this Vector3 vector, float z) => new(vector.x, vector.y, z);
 		
 		#if MATHEMATICS
