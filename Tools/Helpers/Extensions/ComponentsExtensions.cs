@@ -15,5 +15,17 @@ namespace GothmogToolkit.Tools.Helpers.Extensions
             if (gameObject)
                 gameObject.SetActive(active);
         }
+        
+        public static void DestroyGameObjectSafe(this Component component)
+        {
+            if (component) 
+                component.gameObject.DestroyGameObjectSafe();
+        }
+
+        public static void DestroyGameObjectSafe(this GameObject gameObject)
+        {
+            if (gameObject)
+                Object.Destroy(gameObject);
+        }
     }
 }
