@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 
 namespace GothmogToolkit.Tools.Core.StatesHandler
 {
+	[Obsolete("Use AsyncState instead.")]
 	public abstract class State : IState
 	{
 		public virtual Type Type => GetType();

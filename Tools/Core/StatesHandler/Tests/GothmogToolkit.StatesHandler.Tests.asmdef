@@ -1,0 +1,26 @@
+{
+    "name": "GothmogToolkit.StatesHandler.Tests",
+    "rootNamespace": "GothmogToolkit.Tools.Core.StatesHandler.Tests",
+    "references": [
+        "GothmogToolkit",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "UniTask"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS",
+        "UNITASK"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

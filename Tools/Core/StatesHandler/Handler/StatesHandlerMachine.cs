@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace GothmogToolkit.Tools.Core.StatesHandler
+	namespace GothmogToolkit.Tools.Core.StatesHandler
 {
-	[Obsolete("Use generic version")]
+	[Obsolete("Use AsyncStateMachine<TState> with AsyncState instead.")]
 	public class StatesHandlerMachine
 	{
 		private readonly Dictionary<Type, IState> _states = new(8);
@@ -71,6 +71,7 @@ namespace GothmogToolkit.Tools.Core.StatesHandler
 		public bool TryGetState(Type type, out IState state) => _states.TryGetValue(type, out state);
 	}
 
+	[Obsolete("Use AsyncStateMachine<TState> with AsyncState instead.")]
 	public class StatesHandlerMachine<TState> where TState : IState
 	{
 		private readonly Dictionary<Type, TState> _states = new(8);

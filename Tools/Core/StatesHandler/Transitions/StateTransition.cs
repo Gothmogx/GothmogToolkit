@@ -3,6 +3,7 @@ using System;
 
 namespace GothmogToolkit.Tools.Core.StatesHandler
 {
+	[Obsolete("Use IStateResult and result-driven transitions instead.")]
 	public class StateTransition
 	{
 		private static StateTransitionsPool Pool { get; } = new();

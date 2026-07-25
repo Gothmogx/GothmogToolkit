@@ -3,6 +3,7 @@ using UnityEngine.Pool;
 
 namespace GothmogToolkit.Tools.Core.StatesHandler
 {
+	[System.Obsolete("Use result-driven transitions instead.")]
 	public class StateTransitionsPool: ObjectPool<StateTransition>
 	{
 		public StateTransitionsPool() : base(createFunc: OnCreate, actionOnRelease: OnRelease)
