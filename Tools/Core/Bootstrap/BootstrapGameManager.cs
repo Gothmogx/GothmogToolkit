@@ -27,18 +27,18 @@ namespace GothmogToolkit.Tools.Core.Bootstrap
         public void Initialize()
         {
             _stateMachine.Initialize(_gameStates);
-            InitializeTransitions();
+            OnAfterStateMachineInitialized();
             Run().Forget();
         }
 
-        protected abstract void InitializeTransitions();
+        protected abstract void OnAfterStateMachineInitialized();
 
         private async UniTask Run()
         {
             await _stateMachine.Run<TFirstState>(_bootstrapCancellationToken.Token);
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             _bootstrapCancellationToken?.Cancel();
             _bootstrapCancellationToken?.Dispose();
