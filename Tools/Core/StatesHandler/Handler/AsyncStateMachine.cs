@@ -7,7 +7,7 @@ using Cysharp.Threading.Tasks;
 
 namespace GothmogToolkit.Tools.Core.StatesHandler
 {
-	public sealed class AsyncStateMachine<TState> where TState : AsyncState
+	public class AsyncStateMachine<TState> where TState : AsyncState
 	{
 		private readonly Dictionary<Type, TState> _states = new(8);
 		private readonly List<TransitionRule> _transitions = new(16);
