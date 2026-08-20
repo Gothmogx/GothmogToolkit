@@ -1,0 +1,28 @@
+{
+    "name": "GothmogToolkit.Windows.PlayMode.Tests",
+    "rootNamespace": "GothmogToolkit.Tools.UI.Windows.PlayMode.Tests",
+    "references": [
+        "GothmogToolkit",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITASK"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.cysharp.unitask",
+            "expression": "",
+            "define": "UNITASK"
+        }
+    ],
+    "noEngineReferences": false,
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}
