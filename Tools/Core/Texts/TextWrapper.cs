@@ -23,6 +23,12 @@ namespace Tools.Core.Texts
             set => _text.color = value;
         }
 
+        public FontStyles FontStyle
+        {
+            get => _text.fontStyle;
+            set => _text.fontStyle = value;
+        }
+
         private void Reset()
         {
             _text = GetComponent<TMP_Text>();
