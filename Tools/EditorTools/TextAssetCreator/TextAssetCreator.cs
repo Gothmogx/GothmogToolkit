@@ -6,9 +6,17 @@ using UnityEngine;
 
 namespace GothmogToolkit.Tools.EditorTools.TextAssetCreator
 {
+#if UNITY_6000_5_OR_NEWER
+    public class CreateTextAssetAction : AssetCreationEndAction
+#else
     public class CreateTextAssetAction : EndNameEditAction
+#endif
     {
+#if UNITY_6000_5_OR_NEWER
+        public override void Action(EntityId entityId, string pathName, string resourceFile)
+#else
         public override void Action(int instanceId, string pathName, string resourceFile)
+#endif
         {
             var content = string.Empty;
             var extension = Path.GetExtension(pathName).ToLower();
@@ -34,7 +42,11 @@ namespace GothmogToolkit.Tools.EditorTools.TextAssetCreator
             var directory = GetSelectedPath();
             var path = Path.Combine(directory, "NewJson.json");
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(
+#if UNITY_6000_5_OR_NEWER
+                EntityId.None,
+#else
                 0,
+#endif
                 action,
                 path,
                 icon,
@@ -50,7 +62,11 @@ namespace GothmogToolkit.Tools.EditorTools.TextAssetCreator
             var directory = GetSelectedPath();
             var path = Path.Combine(directory, "NewText.txt");
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(
+#if UNITY_6000_5_OR_NEWER
+                EntityId.None,
+#else
                 0,
+#endif
                 action,
                 path,
                 icon,
