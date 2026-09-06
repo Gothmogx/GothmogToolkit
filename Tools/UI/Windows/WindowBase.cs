@@ -15,6 +15,7 @@ namespace GothmogToolkit.Tools.UI.Windows
 
 		public WindowState State { get; private set; } = WindowState.Closed;
 		public bool IsInteractable => _canvasGroup != null && _canvasGroup.interactable;
+		protected CanvasGroup CanvasGroup => _canvasGroup;
 
 		internal CancellationToken DestroyCancellationToken => this.GetCancellationTokenOnDestroy();
 
