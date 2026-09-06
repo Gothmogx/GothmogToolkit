@@ -19,9 +19,8 @@ namespace GothmogToolkit.Tools.Core.LoadingScreens.Scripts
 		{
 			SetActive(true);
 			CreateCancellationToken();
-
-			SetActive(true);
 			_canvasGroup.blocksRaycasts = true;
+			_canvasGroup.alpha = 0f;
 			await AnimateCanvasAlpha(1f, _showDuration, _cts.Token);
 		}
 
@@ -43,6 +42,7 @@ namespace GothmogToolkit.Tools.Core.LoadingScreens.Scripts
 			CreateCancellationToken();
 
 			_canvasGroup.blocksRaycasts = false;
+			_canvasGroup.alpha = 1f;
 			await AnimateCanvasAlpha(0f, _hideDuration, _cts.Token);
 
 			SetActive(false);
